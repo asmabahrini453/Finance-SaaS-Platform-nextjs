@@ -22,30 +22,7 @@ app
         userId:auth.userId
     })
     })
-    .get('/hello/:test',
-        zValidator(
-            'param',
-            z.object({
-              test: z.string(),
-            })
-          ),
-        (c)=>{
-        const {test} = c.req.valid("param");
-        return c.json({
-            message:"hello",
-            test:test
-        })
-    })
-    .post("/",
-        zValidator("json",z.object({
-            name:z.string(),
-            userId:z.number()
-        })),
-        (c)=>{
-            const {name,userId} = c.req.valid("json");
-            return c.json({})
-        }
-    )
+  
 
 export const GET = handle(app)
 export const POST = handle(app)
