@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1731416745459,
+      "tag": "0000_chubby_nocturne",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1731417132666,
+      "tag": "0001_stale_shiver_man",
+      "breakpoints": true
+    }
+  ]
+}
