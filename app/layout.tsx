@@ -6,6 +6,7 @@ import {
  
 } from '@clerk/nextjs'
 import { QueryProvider } from "@/providers/query-providers";
+import { SheetProvider } from "@/providers/sheet-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -38,7 +39,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <QueryProvider>
+          <SheetProvider/>
              {children}
+
         </QueryProvider>
       </body>
     </html>

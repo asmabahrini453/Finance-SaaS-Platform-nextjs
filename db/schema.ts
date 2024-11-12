@@ -15,7 +15,7 @@ export const accounts = pgTable("accounts", {
 //   transactions: many(transactions),
 // }));
 
-// export const insertAccountSchema = createInsertSchema(accounts);
+ export const insertAccountSchema = createInsertSchema(accounts);
 
 // //categories schema
 // export const categories = pgTable("categories", {
