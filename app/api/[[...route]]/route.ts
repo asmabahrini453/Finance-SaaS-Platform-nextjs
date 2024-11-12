@@ -3,26 +3,20 @@ import { handle } from 'hono/vercel'
 import { z } from 'zod'
 import { zValidator } from '@hono/zod-validator'
 import { clerkMiddleware, getAuth } from '@hono/clerk-auth'
+import accounts from "./accounts"
 
 
 export const runtime = 'edge'
-
+//api route setup 
 const app = new Hono().basePath('/api')
 
-app
-    .get('/hello', 
-        clerkMiddleware()
-        ,(c) => {
-            const auth =getAuth(c) 
-            if (!auth?.userId){
-                return c.json({error:"unauthorized access"})
-            }
-    return c.json({
-        message: 'Hello Next.js!',
-        userId:auth.userId
-    })
-    })
-  
+//setting the sub-routes
+const routes=app
+    .route("/accounts",accounts);
 
 export const GET = handle(app)
 export const POST = handle(app)
+
+//genrating RPC type: the client can call backend api in a type-safe manner
+//it allows client to know what endpoints and types are available
+export type AppType = typeof routes;
