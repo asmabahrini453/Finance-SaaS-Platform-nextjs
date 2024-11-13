@@ -146,7 +146,7 @@ const app = new Hono()
       return c.json({ data });
     }
   )
-  //bulk delete for transactions
+  //bulk create  transactions (when we upload a CSV File)
   .post(
     "/bulk-create",
     clerkMiddleware(),

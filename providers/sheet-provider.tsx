@@ -21,8 +21,8 @@ export const SheetProvider = () => {
        <NewCategorySheet />
       <EditCategorySheet />
 
-      {/* <NewTransactionSheet />
-      <EditTransactionSheet />  */}
+       {/* <NewTransactionSheet />
+      <EditTransactionSheet />   */}
     </>
   );
 };
