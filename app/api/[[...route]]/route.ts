@@ -14,8 +14,10 @@ const app = new Hono().basePath('/api')
 const routes=app
     .route("/accounts",accounts);
 
-export const GET = handle(app)
-export const POST = handle(app)
+export const GET = handle(app);
+export const POST = handle(app);
+export const PATCH = handle(app);
+ export const DELETE = handle(app);
 
 //genrating RPC type: the client can call backend api in a type-safe manner
 //it allows client to know what endpoints and types are available
