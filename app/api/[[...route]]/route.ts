@@ -4,6 +4,7 @@ import { z } from 'zod'
 import { zValidator } from '@hono/zod-validator'
 import { clerkMiddleware, getAuth } from '@hono/clerk-auth'
 import accounts from "./accounts"
+import categories from "./categories"
 
 
 export const runtime = 'edge'
@@ -11,8 +12,9 @@ export const runtime = 'edge'
 const app = new Hono().basePath('/api')
 
 //setting the sub-routes
-const routes=app
-    .route("/accounts",accounts);
+const routes = app
+  .route("/accounts", accounts)
+  .route("/categories", categories)
 
 export const GET = handle(app);
 export const POST = handle(app);
