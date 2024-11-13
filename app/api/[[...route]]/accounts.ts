@@ -59,7 +59,36 @@ const app = new Hono()
        //RQ: drizzle always returns an array (like sql) we can say data[0] if we want the first elem
     }
   )
-
+  //bulk-delete is deleting an array of selected ids that's why we use POST and not DELETE
+  .post(
+    "/bulk-delete",
+    clerkMiddleware(),
+    zValidator(
+      "json",
+      z.object({
+        ids: z.array(z.string()),
+      })
+    ),
+    async (c) => {
+      const auth = getAuth(c);
+      const values = c.req.valid("json");
+      if (!auth?.userId) {
+        return c.json({ error: "Unauthorized" }, 401);
+      }
+      const data = await db
+        .delete(accounts)
+        .where(
+          and(
+            eq(accounts.userId, auth.userId),
+            inArray(accounts.id, values.ids)
+          )
+        )
+        .returning({
+          id: accounts.id,
+        });
+      return c.json({ data });
+    }
+  )
 
 
 export default app;

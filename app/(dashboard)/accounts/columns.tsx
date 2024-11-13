@@ -11,8 +11,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 export type ResponseType = InferResponseType<
   typeof client.api.accounts.$get,
-  200
->["data"][0];
+  200 //status of the success to only get the success format
+>["data"][0];//get the first element of the array drizzle returns from the api response 
 
 export const columns: ColumnDef<ResponseType>[] = [
   {
