@@ -10,13 +10,14 @@ import { accounts, categories, transactions } from "@/db/schema";
 import { calculatePercentage, fillMissingDays } from "@/lib/utils";
 
 const app = new Hono()
-//get summary
+//get summary data
     .get(
     "/",
     clerkMiddleware(),
     zValidator(
         "query",
         z.object({
+            //date & account id
         from: z.string().optional(),
         to: z.string().optional(),
         accountId: z.string().optional(),
@@ -29,20 +30,20 @@ const app = new Hono()
         if (!auth?.userId) {
         return c.json({ error: "Unauthorized" }, 401);
         }
-
-        const defaultTo = new Date();
-        const defaultFrom = subDays(defaultTo, 30);
+        //default date range
+        const defaultTo = new Date();//default "to" hia today
+        const defaultFrom = subDays(defaultTo, 30); //default "from" hia 30 days ago
 
         const startDate = from
         ? parse(from, "yyyy-MM-dd", new Date())
         : defaultFrom;
 
         const endDate = to ? parse(to, "yyyy-MM-dd", new Date()) : defaultTo;
-
+        //calculate periods
         const periodLength = differenceInDays(endDate, startDate) + 1;
         const lastPeriodStart = subDays(startDate, periodLength);
         const lastPeriodEnd = subDays(endDate, periodLength);
-
+    // Func to fetch income, expenses, and remaining balance
         async function fetchFinancialData(
         userId: string,
         startDate: Date,
@@ -71,7 +72,7 @@ const app = new Hono()
             )
             );
         }
-
+  // Fetch current and last period financial data
         const [currentPeriod] = await fetchFinancialData(
         auth.userId,
         startDate,
@@ -82,7 +83,7 @@ const app = new Hono()
         lastPeriodStart,
         lastPeriodEnd
         );
-
+    // Calculate percentage changes 
         const incomeChange = calculatePercentage(
         currentPeriod.income,
         lastPeriod.income
@@ -95,7 +96,7 @@ const app = new Hono()
         currentPeriod.remaining,
         lastPeriod.remaining
         );
-
+    // get top spending categories
         const category = await db
         .select({
             name: categories.name,
@@ -108,7 +109,7 @@ const app = new Hono()
             and(
             accountId ? eq(transactions.accountId, accountId) : undefined,
             eq(accounts.userId, auth.userId),
-            lt(transactions.amount, 0),
+            lt(transactions.amount, 0),// Only negative amounts => expenses
             gte(transactions.date, startDate),
             lte(transactions.date, endDate)
             )
@@ -116,7 +117,7 @@ const app = new Hono()
         .groupBy(categories.name)
         .orderBy(desc(sql`SUM(ABS(${transactions.amount}))`));
 
-        const topCategories = category.slice(0, 3);
+        const topCategories = category.slice(0, 3); //top 3 categories
         const otherCategories = category.slice(3);
         const otherSum = otherCategories.reduce(
         (sum, current) => sum + current.value,
@@ -129,7 +130,7 @@ const app = new Hono()
             value: otherSum,
         });
         }
-
+        // active days' income and expenses within the period
         const activeDays = await db
         .select({
             date: transactions.date,
@@ -154,7 +155,7 @@ const app = new Hono()
         )
         .groupBy(transactions.date)
         .orderBy(transactions.date);
-
+        // for missing days with we put 0 income/expense
         const days = fillMissingDays(activeDays, startDate, endDate);
 
         return c.json({

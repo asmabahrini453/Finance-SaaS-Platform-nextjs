@@ -6,12 +6,13 @@ import { convertAmountFromMiliunits } from "@/lib/utils";
 
 export const useGetSummary = () => {
   const params = useSearchParams();
+  //retrieve the "from" & "to" & "accountId"
   const from = params.get("from") || "";
-  const to = params.get("to") || "";
+  const to = params.get("to") || ""; 
   const accountId = params.get("accountId") || "";
 
   const query = useQuery({
-    queryKey: ["summary", { from, to, accountId }],
+    queryKey: ["summary", { from, to, accountId }], //catch reponse
     queryFn: async () => {
       const response = await client.api.summary.$get({
         query: { from, to, accountId },
@@ -19,9 +20,10 @@ export const useGetSummary = () => {
       if (!response.ok) {
         throw new Error("Faild to fetch transactions");
       }
-      const { data } = await response.json();
+      const { data } = await response.json(); //extracting data ml response
       return {
         ...data,
+        // Convert amounts from miliunits to units and format data for consumption
         incomeAmount: convertAmountFromMiliunits(data.incomeAmount),
         expensesAmount: convertAmountFromMiliunits(data.expensesAmount),
         remainingAmount: convertAmountFromMiliunits(data.remainingAmount),
