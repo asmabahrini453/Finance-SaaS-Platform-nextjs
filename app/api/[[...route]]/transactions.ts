@@ -37,7 +37,7 @@ const app = new Hono()
       }
 //using the library date-fns for this date operations
       const defaultTo = new Date();
-      const defaultFrom = subDays(defaultTo, 30);//fetch the last 3O days
+      const defaultFrom = subDays(defaultTo, 300);//fetch the last 3O days
 
       const startDate = from
         ? parse(from, "yyyy-MM-dd", new Date())
