@@ -1,8 +1,5 @@
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
-import { z } from 'zod'
-import { zValidator } from '@hono/zod-validator'
-import { clerkMiddleware, getAuth } from '@hono/clerk-auth'
 import accounts from "./accounts"
 import categories from "./categories"
 import transactions from "./transactions";
@@ -14,6 +11,8 @@ export const runtime = 'edge'
 const app = new Hono().basePath('/api')
 
 //setting the sub-routes
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const routes = app
   .route("/accounts", accounts)
   .route("/categories", categories)

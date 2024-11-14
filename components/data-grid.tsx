@@ -11,7 +11,7 @@ import { DataCard, DataCardLoading } from "./data-card";
 
 export const DataGrid = () => {
   const { data, isLoading } = useGetSummary(); //get summary data
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
   const params = useSearchParams();
   const to = useSearchParams().get("to") || "";
   const from = useSearchParams().get("from") || "";

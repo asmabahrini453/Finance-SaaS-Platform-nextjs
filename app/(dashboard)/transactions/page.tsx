@@ -19,7 +19,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { columns } from "./columns";
 import { UploadButton } from "./upload-button";
 import { ImportCard } from "./import-card";
-import { convertAmountToMiliunits } from "@/lib/utils";
 import { useSelectAccount } from "@/features/accounts/hooks/use-select-account";
 
 enum VARIANTS {
