@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Finance SaaS Platform
 
-First, run the development server:
+This project is a Finance SaaS Platform designed to help users manage their daily transactions, including income and expenses. It provides interactive charts, transaction management, and support for CSV file imports, all while being built with modern tools like Clerk, Neon DB, and Drizzle ORM.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Authentication and User Management
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Authentication**: The authentication process is handled by **Clerk**, providing secure and seamless user login and registration.
+- **User Settings**: Users can update their credentials and account settings directly via Clerk's user management interface.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Database and ORM
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Database**: The platform uses **Neon**, a seamless PostgreSQL database, for storing and retrieving data efficiently.
+- **ORM**: **Drizzle ORM** is used for interacting with the database, ensuring clean and maintainable code.
 
-## Learn More
+## Features
 
-To learn more about Next.js, take a look at the following resources:
+### Dashboard
+- After logging in, users can access a **dashboard** to track income and expenses through **interactive charts**.
+- **Filters**: Filter data by accounts or a specific date range for a customized view.
+- **Category Chart**: View transaction summaries grouped by categories.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Transactions Page
+- Check your **transaction history** in a detailed table displaying key information:
+  - **Date**  
+  - **Category**  
+  - **Payee**  
+  - **Amount**  
+  - **Associated Account**
+- Manage transactions with the following actions:
+  - **Add**: Create a new transaction.
+  - **Edit**: Update existing transaction details.
+  - **Delete**: Remove a single transaction.
+  - **Bulk Delete**: Delete multiple transactions at once.
+  - **Bulk Create**: Import transactions in bulk using a **CSV file**. Map the columns in the file to specific fields, then save the transactions.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Accounts and Categories Management
+- **Accounts**: Manage your accounts directly within the platform.
+- **Categories**: Organize your transactions by managing categories through a dedicated page.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Conclusion
+This platform provides an all-in-one solution for tracking and managing financial transactions, offering robust features and a user-friendly experience. Whether you're looking to keep track of daily expenses or organize bulk transactions, this tool makes it simple and efficient.  
